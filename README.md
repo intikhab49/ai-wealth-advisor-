@@ -1,6 +1,31 @@
 Wealth AI Assistant
 
-A smart financial assistant that analyzes portfolios, assesses risks, and suggests investment strategies using LangChain and Microsoft Fabric. Features include risk metrics (VaR, Sharpe ratio), diversification analysis, and AI-powered recommendations. Built with Python, Flask, and ChromaDB for conversational memory. Provides real-time portfolio insights and data-driven investment guidance.
+A smart financial assistant that analyzes portfolios, assesses risks, and suggests investment strategies using LangChain and Microsoft Fabric. Features include risk metrics (VaR, Sharpe ratio), diversification analysis, and AI-powered recommendations. Built with Python, Flask, and ChromaDB for conversational memory. Provides real-time portfolio insights and data-driven investment guidance.                                                                                                                                                                                                                                                                                
+Hybrid RAG (Retrieval-Augmented Generation) System with the following characteristics:
+
+Memory-Augmented RAG:
+Uses ChromaDB for persistent conversation memory
+Tracks user preferences and conversation history
+Enables personalized financial recommendations
+Tool-Augmented RAG:
+Integrates specialized financial tools:
+Portfolio risk assessment
+Diversification analysis
+Investment strategy design
+Tools provide structured financial analysis
+Multi-Model Support:
+Supports multiple LLM backends (Gemini, OpenRouter)
+Fallback to demo mode without API keys
+Model-agnostic architecture
+Key Components:
+Retrieval: ChromaDB for conversation history
+Augmentation: Financial analysis tools
+Generation: LLM-powered responses with context
+Special Features:
+User-specific memory persistence
+Financial domain-specific tools
+Real-time portfolio analysis
+Context-aware recommendations
 
 ## Features
 
@@ -8,7 +33,7 @@ A smart financial assistant that analyzes portfolios, assesses risks, and sugges
 - **Diversification Analysis**: Assess sector, geography, asset class diversification
 - **Investment Strategy**: AI-powered personalized strategy recommendations
 - **Conversational Memory**: ChromaDB vector store for context-aware recommendations
-- **Modern Chat UI**: Real-time chatbot interface with visualizations
+- **Modern Chat UI: Real-time chatbot interface with visualizations
 
 ## Quick Start
 
