@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WealthAdvisor AI | Your Intelligent Financial Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span class="logo-icon">💰</span>
+                    <span class="logo-text">WealthAdvisor</span>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <button class="nav-btn active" data-view="chat">
+                    <span class="nav-icon">💬</span>
+                    <span>Chat</span>
+                </button>
+                <button class="nav-btn" data-view="portfolio">
+                    <span class="nav-icon">📊</span>
+                    <span>Portfolio</span>
+                </button>
+                <button class="nav-btn" data-view="tools">
+                    <span class="nav-icon">🛠️</span>
+                    <span>Tools</span>
+                </button>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button class="clear-btn" onclick="clearConversation()">
+                    🗑️ Clear Chat
+                </button>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Chat View -->
+            <div class="view chat-view active" id="chat-view">
+                <header class="chat-header">
+                    <h1>AI Financial Assistant</h1>
+                    <p>Get personalized wealth management advice</p>
+                </header>
+                
+                <div class="chat-container" id="chat-container">
+                    <div class="message assistant">
+                        <div class="message-avatar">🤖</div>
+                        <div class="message-content">
+                            <p>👋 Hello! I'm your <strong>Wealth Management AI Assistant</strong>.</p>
+                            <p>I can help you with:</p>
+                            <ul>
+                                <li>📊 <strong>Portfolio Risk Assessment</strong> - Analyze VaR, Sharpe ratio, volatility</li>
+                                <li>🎯 <strong>Risk Tolerance Assessment</strong> - Determine your investor profile</li>
+                                <li>🔀 <strong>Diversification Analysis</strong> - Check portfolio balance</li>
+                                <li>📈 <strong>Investment Strategy</strong> - Personalized recommendations</li>
+                            </ul>
+                            <p>Try asking me something like:</p>
+                            <div class="suggestion-chips">
+                                <button class="chip" onclick="sendSuggestion('Assess my risk tolerance')">Assess my risk tolerance</button>
+                                <button class="chip" onclick="sendSuggestion('Analyze my portfolio diversification')">Analyze diversification</button>
+                                <button class="chip" onclick="sendSuggestion('Design an investment strategy for retirement')">Design a strategy</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chat-input-container">
+                    <div class="chat-input-wrapper">
+                        <textarea 
+                            id="chat-input" 
+                            placeholder="Ask about portfolio risk, investment strategies, diversification..."
+                            rows="1"
+                            onkeydown="handleKeyDown(event)"
+                        ></textarea>
+                        <button class="send-btn" onclick="sendMessage()" id="send-btn">
+                            <span>➤</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Portfolio View -->
+            <div class="view portfolio-view" id="portfolio-view">
+                <header class="view-header">
+                    <h1>📊 Portfolio Manager</h1>
+                    <p>Add your holdings for personalized analysis</p>
+                </header>
+                
+                <div class="portfolio-form">
+                    <div class="form-section">
+                        <h3>Add Holdings</h3>
+                        <div class="form-grid">
+                            <input type="text" id="holding-symbol" placeholder="Symbol (e.g., VTI)">
+                            <input type="text" id="holding-name" placeholder="Name">
+                            <input type="number" id="holding-value" placeholder="Value ($)">
+                            <select id="holding-class">
+                                <option value="equity">Equity</option>
+                                <option value="bond">Bond</option>
+                                <option value="cash">Cash</option>
+                                <option value="real_estate">Real Estate</option>
+                                <option value="commodity">Commodity</option>
+                                <option value="crypto">Crypto</option>
+                            </select>
+                            <select id="holding-sector">
+                                <option value="">Sector (optional)</option>
+                                <option value="technology">Technology</option>
+                                <option value="healthcare">Healthcare</option>
+                                <option value="financial">Financial</option>
+                                <option value="consumer">Consumer</option>
+                                <option value="energy">Energy</option>
+                                <option value="industrial">Industrial</option>
+                                <option value="diversified">Diversified</option>
+                            </select>
+                            <select id="holding-geography">
+                                <option value="">Geography (optional)</option>
+                                <option value="US">United States</option>
+                                <option value="International">International</option>
+                                <option value="Emerging">Emerging Markets</option>
+                                <option value="Global">Global</option>
+                            </select>
+                        </div>
+                        <button class="primary-btn" onclick="addHolding()">➕ Add Holding</button>
+                    </div>
+                    
+                    <div class="holdings-list" id="holdings-list">
+                        <h3>Your Holdings</h3>
+                        <div class="holdings-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Symbol</th>
+                                        <th>Name</th>
+                                        <th>Value</th>
+                                        <th>Class</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="holdings-tbody">
+                                    <tr class="empty-row">
+                                        <td colspan="5">No holdings added yet</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="portfolio-actions">
+                        <button class="primary-btn" onclick="analyzePortfolio('risk')">📉 Analyze Risk</button>
+                        <button class="secondary-btn" onclick="analyzePortfolio('diversification')">🔀 Check Diversification</button>
+                        <button class="secondary-btn" onclick="analyzePortfolio('rebalance')">⚖️ Suggest Rebalancing</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tools View -->
+            <div class="view tools-view" id="tools-view">
+                <header class="view-header">
+                    <h1>🛠️ Financial Tools</h1>
+                    <p>Quick access to analysis tools</p>
+                </header>
+                
+                <div class="tools-grid">
+                    <div class="tool-card" onclick="openTool('risk-questionnaire')">
+                        <div class="tool-icon">🎯</div>
+                        <h3>Risk Tolerance Quiz</h3>
+                        <p>Answer a few questions to determine your investor profile</p>
+                    </div>
+                    
+                    <div class="tool-card" onclick="openTool('strategy-planner')">
+                        <div class="tool-icon">📈</div>
+                        <h3>Strategy Planner</h3>
+                        <p>Design a personalized investment strategy</p>
+                    </div>
+                    
+                    <div class="tool-card" onclick="openTool('calculator')">
+                        <div class="tool-icon">🧮</div>
+                        <h3>Investment Calculator</h3>
+                        <p>Project future portfolio value</p>
+                    </div>
+                    
+                    <div class="tool-card" onclick="openTool('learn')">
+                        <div class="tool-icon">📚</div>
+                        <h3>Learn</h3>
+                        <p>Financial education and concepts</p>
+                    </div>
+                </div>
+                
+                <!-- Risk Questionnaire Modal -->
+                <div class="modal" id="risk-questionnaire-modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>🎯 Risk Tolerance Assessment</h2>
+                            <button class="close-btn" onclick="closeModal('risk-questionnaire-modal')">✕</button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="risk-form">
+                                <div class="form-group">
+                                    <label>Your Age</label>
+                                    <input type="number" id="q-age" value="35" min="18" max="100">
+                                </div>
+                                <div class="form-group">
+                                    <label>Investment Experience</label>
+                                    <select id="q-experience">
+                                        <option value="none">None</option>
+                                        <option value="beginner">Beginner (1-3 years)</option>
+                                        <option value="intermediate" selected>Intermediate (3-10 years)</option>
+                                        <option value="advanced">Advanced (10+ years)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Investment Time Horizon (years)</label>
+                                    <input type="number" id="q-horizon" value="20" min="1" max="50">
+                                </div>
+                                <div class="form-group">
+                                    <label>If your portfolio dropped 20%, you would:</label>
+                                    <select id="q-reaction">
+                                        <option value="sell_all">Sell everything immediately</option>
+                                        <option value="sell_some">Sell some to reduce risk</option>
+                                        <option value="hold" selected>Hold and wait for recovery</option>
+                                        <option value="buy_more">Buy more at lower prices</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Primary Investment Goal</label>
+                                    <select id="q-goal">
+                                        <option value="preservation">Capital Preservation</option>
+                                        <option value="income">Income Generation</option>
+                                        <option value="growth" selected>Long-term Growth</option>
+                                        <option value="aggressive_growth">Aggressive Growth</option>
+                                    </select>
+                                </div>
+                                <button type="button" class="primary-btn" onclick="submitRiskAssessment()">
+                                    Get My Risk Profile
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-spinner"></div>
+        <p>Analyzing...</p>
+    </div>
+    
+    <script src="chat.js"></script>
+</body>
+</html>
